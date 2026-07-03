@@ -1,4 +1,5 @@
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api';
+export const TENANT_SLUG = process.env.NEXT_PUBLIC_TENANT_SLUG || 'studio-regina';
 
 export class ApiError extends Error {
   constructor(message: string, public status: number) {
@@ -106,5 +107,21 @@ export const api = {
     progress: () => request<any[]>('/goals/progress'),
     create: (d: object) => request<any>('/goals', { method: 'POST', body: JSON.stringify(d) }),
     remove: (id: string) => request<any>(`/goals/${id}`, { method: 'DELETE' }),
+  },
+  public: {
+    info: () => request<any>(`/public/${TENANT_SLUG}/info`),
+    services: () => request<any[]>(`/public/${TENANT_SLUG}/services`),
+    professionals: () => request<any[]>(`/public/${TENANT_SLUG}/professionals`),
+    availability: (professionalId: string, serviceId: string, date: string) =>
+      request<string[]>(
+        `/public/${TENANT_SLUG}/availability?professionalId=${professionalId}&serviceId=${serviceId}&date=${date}`
+      ),
+    book: (d: object) =>
+      request<any>(`/public/${TENANT_SLUG}/book`, { method: 'POST', body: JSON.stringify(d) }),
+    myAppointments: (phone: string) =>
+      request<any[]>(`/public/${TENANT_SLUG}/my-appointments`, {
+        method: 'POST',
+        body: JSON.stringify({ phone }),
+      }),
   },
 };

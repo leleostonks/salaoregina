@@ -10,10 +10,11 @@ export default function LandingPage() {
           </Link>
           <nav className="hidden md:flex gap-7 text-sm text-text-muted">
             <a href="#funcionalidades" className="hover:text-accent">Funcionalidades</a>
+            <Link href="/agendar" className="hover:text-accent">Agendar horário</Link>
           </nav>
           <div className="flex gap-2">
             <Link href="/login" className="btn btn-ghost btn-sm">Entrar</Link>
-            <Link href="/login" className="btn btn-primary btn-sm">Acessar painel</Link>
+            <Link href="/agendar" className="btn btn-primary btn-sm">Agendar horário</Link>
           </div>
         </div>
       </header>
@@ -32,8 +33,8 @@ export default function LandingPage() {
               Saiba em tempo real quanto você fatura, quem gera mais lucro e como está a saúde financeira — tudo em um único lugar.
             </p>
             <div className="flex gap-4 justify-center flex-wrap">
-              <Link href="/login" className="btn btn-primary text-base px-7 py-3">Acessar o painel</Link>
-              <a href="#funcionalidades" className="btn btn-outline text-base px-7 py-3">Ver funcionalidades</a>
+              <Link href="/agendar" className="btn btn-primary text-base px-7 py-3">Agendar horário</Link>
+              <Link href="/login" className="btn btn-outline text-base px-7 py-3">Acessar o painel</Link>
             </div>
           </div>
         </section>

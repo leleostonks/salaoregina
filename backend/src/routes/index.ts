@@ -9,12 +9,21 @@ import * as expenses from './expenses.routes';
 import * as products from './products.routes';
 import * as goals from './goals.routes';
 import * as dashboard from './dashboard.routes';
+import * as pub from './public.routes';
 
 const router = Router();
 
 // Público
 router.post('/auth/register', auth.register);
 router.post('/auth/login', auth.login);
+
+// Público — agendamento pelo cliente final (sem login)
+router.get('/public/:slug/info', pub.info);
+router.get('/public/:slug/services', pub.listServices);
+router.get('/public/:slug/professionals', pub.listProfessionals);
+router.get('/public/:slug/availability', pub.availability);
+router.post('/public/:slug/book', pub.book);
+router.post('/public/:slug/my-appointments', pub.myAppointments);
 
 // Protegido (multi-tenant)
 const protected_ = Router();
