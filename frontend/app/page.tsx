@@ -10,7 +10,6 @@ export default function LandingPage() {
           </Link>
           <nav className="hidden md:flex gap-7 text-sm text-text-muted">
             <a href="#funcionalidades" className="hover:text-accent">Funcionalidades</a>
-            <a href="#planos" className="hover:text-accent">Planos</a>
           </nav>
           <div className="flex gap-2">
             <Link href="/login" className="btn btn-ghost btn-sm">Entrar</Link>
@@ -63,28 +62,6 @@ export default function LandingPage() {
           </div>
         </section>
 
-        <section id="planos" className="py-20 px-6">
-          <div className="max-w-5xl mx-auto">
-            <h2 className="font-display text-3xl font-bold text-center mb-12">Planos</h2>
-            <div className="grid md:grid-cols-3 gap-6">
-              {[
-                { name: 'Básico', price: 99, features: ['Dashboard', 'Até 3 profissionais', 'Relatórios básicos'] },
-                { name: 'Profissional', price: 199, popular: true, features: ['Tudo do Básico', 'Até 10 profissionais', 'Comissões e metas', 'Financeiro completo'] },
-                { name: 'Premium', price: 349, features: ['Profissionais ilimitados', 'Controle de estoque', 'Múltiplas unidades', 'Suporte prioritário'] },
-              ].map((p) => (
-                <div key={p.name} className={`card relative ${p.popular ? 'border-accent' : ''}`}>
-                  {p.popular && <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-accent text-bg text-xs font-bold px-3 py-1 rounded-full">Popular</span>}
-                  <h3 className="font-bold text-lg">{p.name}</h3>
-                  <div className="my-4"><span className="text-3xl font-extrabold">R${p.price}</span><span className="text-text-muted">/mês</span></div>
-                  <ul className="text-sm text-text-muted space-y-2 mb-6">
-                    {p.features.map((f) => <li key={f}>✓ {f}</li>)}
-                  </ul>
-                  <Link href="/login" className={`btn btn-block w-full ${p.popular ? 'btn-primary' : 'btn-outline'}`}>Começar</Link>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
       </main>
 
       <footer className="border-t border-border py-8 text-center text-sm text-text-muted">
