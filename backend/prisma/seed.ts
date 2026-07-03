@@ -121,6 +121,8 @@ async function main() {
   const paymentMethods = ['PIX', 'CREDIT_CARD', 'CASH', 'DEBIT_CARD'] as const;
 
   let appointmentCount = 0;
+  const hasAppointments = await prisma.appointment.findFirst({ where: { tenantId: tenant.id } });
+  if (!hasAppointments) {
   for (let day = 29; day >= 0; day--) {
     const date = new Date(now);
     date.setDate(date.getDate() - day);
@@ -160,7 +162,10 @@ async function main() {
       appointmentCount++;
     }
   }
+  }
 
+  const hasExpenses = await prisma.expense.findFirst({ where: { tenantId: tenant.id } });
+  if (!hasExpenses) {
   const expenseData = [
     { description: 'Aluguel do salão', amount: 3500, category: 'RENT' as const, status: 'PAID' as const },
     { description: 'Energia elétrica', amount: 420, category: 'UTILITIES' as const, status: 'PAID' as const },
@@ -185,6 +190,7 @@ async function main() {
         paidAt: exp.status === 'PAID' ? dueDate : null,
       },
     });
+  }
   }
 
   const goalExists = await prisma.goal.findFirst({

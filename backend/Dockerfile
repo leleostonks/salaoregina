@@ -17,4 +17,4 @@ COPY --from=builder /app/dist ./dist/
 COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma/
 RUN npx prisma generate
 EXPOSE 3001
-CMD ["sh", "-c", "npx prisma migrate deploy && node dist/index.js"]
+CMD ["sh", "-c", "npx prisma migrate deploy && if [ \"$RUN_SEED\" = \"true\" ]; then npx tsx prisma/seed.ts; fi && node dist/index.js"]
