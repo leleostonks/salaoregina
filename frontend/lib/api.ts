@@ -95,6 +95,7 @@ export const api = {
       request<any>(`/appointments/${id}/complete`, { method: 'PATCH', body: JSON.stringify(d) }),
     update: (id: string, d: object) =>
       request<any>(`/appointments/${id}`, { method: 'PUT', body: JSON.stringify(d) }),
+    remove: (id: string) => request<any>(`/appointments/${id}`, { method: 'DELETE' }),
   },
   expenses: {
     list: () => request<any[]>('/expenses'),

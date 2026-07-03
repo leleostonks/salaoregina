@@ -47,6 +47,12 @@ export default function AtendimentosPage() {
     setPayRows([{ method: 'PIX', amount: String(apt.price) }]);
   }
 
+  async function handleRemove(a: any) {
+    if (!confirm('Excluir este atendimento? Essa ação não pode ser desfeita.')) return;
+    await api.appointments.remove(a.id);
+    load();
+  }
+
   function toggleService(id: string) {
     setSelectedServices((prev) =>
       prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
@@ -77,9 +83,12 @@ export default function AtendimentosPage() {
                 <td className="p-3 text-xs">{paymentDisplay(a)}</td>
                 <td className="p-3"><span className={`badge ${STATUS_MAP[a.status]?.[1]}`}>{STATUS_MAP[a.status]?.[0]}</span></td>
                 <td className="p-3">
-                  {a.status === 'SCHEDULED' && (
-                    <button className="btn btn-primary btn-sm" onClick={() => openComplete(a)}>Concluir</button>
-                  )}
+                  <div className="flex gap-2 justify-end">
+                    {a.status === 'SCHEDULED' && (
+                      <button className="btn btn-primary btn-sm" onClick={() => openComplete(a)}>Concluir</button>
+                    )}
+                    <button className="btn btn-ghost btn-sm text-danger" onClick={() => handleRemove(a)}>Excluir</button>
+                  </div>
                 </td>
               </tr>
             ))}
