@@ -1,7 +1,13 @@
 const API_URL = resolveApiUrl();
 
 function resolveApiUrl(): string {
-  const raw = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api';
+  const raw = process.env.NEXT_PUBLIC_API_URL;
+  if (!raw) {
+    return process.env.NODE_ENV === 'production' ? '/api' : 'http://localhost:3001/api';
+  }
+  if (raw.startsWith('/')) {
+    return raw.endsWith('/api') ? raw : `${raw.replace(/\/$/, '')}/api`;
+  }
   if (raw.endsWith('/api')) return raw;
   return `${raw.replace(/\/$/, '')}/api`;
 }

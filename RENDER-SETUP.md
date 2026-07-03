@@ -1,60 +1,71 @@
-# Render — variáveis obrigatórias (configurar no dashboard)
+# Deploy no Render — 1 serviço só (API + site)
 
-## salonhub-db (PostgreSQL)
-Criado automaticamente pelo Blueprint ou manualmente em New → PostgreSQL.
+## O que mudou
 
----
+Agora **um único Web Service** serve tudo:
+- `https://SEU-SERVICO.onrender.com/` → landing
+- `https://SEU-SERVICO.onrender.com/login` → painel
+- `https://SEU-SERVICO.onrender.com/health` → API
+- `https://SEU-SERVICO.onrender.com/api/...` → API
 
-## salonhub-backend (Web Service — Docker)
-
-| Variável | Obrigatória | Como obter |
-|----------|-------------|------------|
-| `DATABASE_URL` | **SIM** | Postgres → Internal Database URL (ou Add from Database) |
-| `JWT_SECRET` | **SIM** | Gere uma chave longa aleatória |
-| `NODE_ENV` | sim | `production` |
-| `HOST` | sim | `0.0.0.0` |
-| `JWT_EXPIRES_IN` | não | `7d` |
-| `CORS_ORIGIN` | sim | URL do frontend (ex: `https://salonhub-frontend.onrender.com`) |
-| `PORT` | auto | Render define automaticamente |
-
-**Settings do backend:**
-- Runtime: **Docker**
-- Root Directory: *(vazio)*
-- Dockerfile Path: `Dockerfile`
-- Health Check Path: `/health`
+Não precisa de segundo serviço para o frontend.
 
 ---
 
-## salonhub-frontend (Web Service — Node)
+## Passo a passo
 
-| Variável | Obrigatória | Como obter |
-|----------|-------------|------------|
-| `NEXT_PUBLIC_API_URL` | **SIM** | URL do backend (com ou sem `/api`) |
-| `NODE_ENV` | sim | `production` |
-| `PORT` | auto | Render define automaticamente |
+### 1. PostgreSQL
+**New** → **PostgreSQL** → name: `salonhub-db`
 
-**Settings do frontend:**
-- Runtime: **Node**
-- Root Directory: `frontend`
-- Build Command: `npm ci && npm run build`
-- Start Command: `npm start -- -p $PORT -H 0.0.0.0`
+### 2. Web Service (só um!)
+**New** → **Web Service** → repo `leleostonks/salaoregina`
+
+| Campo | Valor |
+|-------|--------|
+| Name | `salaoregina` (ou `salaoregina-1`) |
+| Runtime | **Docker** |
+| Root Directory | *(vazio)* |
+| Dockerfile | `Dockerfile` |
+| Health Check | `/health` |
+
+### 3. Environment
+
+| Key | Value |
+|-----|--------|
+| `DATABASE_URL` | **Add from Database** → `salonhub-db` |
+| `JWT_SECRET` | chave longa aleatória |
+| `NODE_ENV` | `production` |
+
+### 4. Apague o serviço duplicado (se tiver 2 iguais)
+
+Mantenha **apenas um** Web Service Docker.
+
+### 5. Push + Deploy
+
+```bash
+git add .
+git commit -m "fix: API e frontend no mesmo serviço Render"
+git push origin master
+```
+
+**Manual Deploy** → **Deploy latest commit**
 
 ---
-
-## Ordem de criação (manual)
-
-1. PostgreSQL (`salonhub-db`)
-2. Backend (`salonhub-backend`) + `DATABASE_URL`
-3. Frontend (`salonhub-frontend`) + `NEXT_PUBLIC_API_URL`
-4. Atualizar `CORS_ORIGIN` no backend com URL real do frontend
-5. Manual Deploy nos dois serviços
-
-## Login demo
-
-- E-mail: `riana@gmail.com`
-- Senha: `123456`
 
 ## Teste
 
-- API: `https://SUA-API.onrender.com/health`
-- Painel: `https://SEU-FRONT.onrender.com/login`
+```
+https://salaoregina-1.onrender.com/health
+https://salaoregina-1.onrender.com/login
+```
+
+Login: **riana@gmail.com** / **123456**
+
+---
+
+## Local (sem mudança)
+
+```bash
+cd backend && npm run dev    # :3001
+cd frontend && npm run dev    # :3000
+```
