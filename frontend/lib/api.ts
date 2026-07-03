@@ -112,9 +112,9 @@ export const api = {
     info: () => request<any>(`/public/${TENANT_SLUG}/info`),
     services: () => request<any[]>(`/public/${TENANT_SLUG}/services`),
     professionals: () => request<any[]>(`/public/${TENANT_SLUG}/professionals`),
-    availability: (professionalId: string, serviceId: string, date: string) =>
+    availability: (professionalId: string, serviceIds: string[], date: string) =>
       request<string[]>(
-        `/public/${TENANT_SLUG}/availability?professionalId=${professionalId}&serviceId=${serviceId}&date=${date}`
+        `/public/${TENANT_SLUG}/availability?professionalId=${professionalId}&serviceIds=${serviceIds.join(',')}&date=${date}`
       ),
     book: (d: object) =>
       request<any>(`/public/${TENANT_SLUG}/book`, { method: 'POST', body: JSON.stringify(d) }),

@@ -52,11 +52,12 @@ export default function MeusAgendamentosPage() {
             )}
             {appointments.map((a) => {
               const [label, cls] = STATUS_MAP[a.status] || [a.status, 'badge-gray'];
+              const serviceNames = (a.items || []).map((i: any) => i.service?.name).filter(Boolean).join(', ');
               return (
                 <div key={a.id} className="card">
                   <div className="flex justify-between items-start mb-2">
                     <div>
-                      <p className="font-bold">{a.service?.name}</p>
+                      <p className="font-bold">{serviceNames || '—'}</p>
                       <p className="text-text-muted text-sm">com {a.professional?.name}</p>
                     </div>
                     <span className={`badge ${cls}`}>{label}</span>

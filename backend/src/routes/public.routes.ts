@@ -39,20 +39,36 @@ export const listProfessionals = asyncHandler(async (req: Request, res: Response
   res.json(professionals);
 });
 
+function parseServiceIds(raw: unknown): string[] {
+  const str = Array.isArray(raw) ? raw.join(',') : String(raw ?? '');
+  const ids = str.split(',').map((s) => s.trim()).filter(Boolean);
+  if (ids.length === 0) throw new AppError(400, 'Selecione ao menos um serviço');
+  return ids;
+}
+
+async function resolveServices(tenantId: string, serviceIds: string[]) {
+  const services = await prisma.service.findMany({
+    where: { id: { in: serviceIds }, tenantId, active: true },
+  });
+  if (services.length !== serviceIds.length) {
+    throw new AppError(404, 'Um ou mais serviços não encontrados');
+  }
+  return services;
+}
+
 const availabilityQuerySchema = z.object({
   professionalId: z.string(),
-  serviceId: z.string(),
+  serviceIds: z.string(),
   date: z.string(),
 });
 
 export const availability = asyncHandler(async (req: Request, res: Response) => {
   const tenant = await resolveTenant(req.params.slug as string);
   const query = availabilityQuerySchema.parse(req.query);
+  const serviceIds = parseServiceIds(query.serviceIds);
 
-  const service = await prisma.service.findFirst({
-    where: { id: query.serviceId, tenantId: tenant.id, active: true },
-  });
-  if (!service) throw new AppError(404, 'Serviço não encontrado');
+  const services = await resolveServices(tenant.id, serviceIds);
+  const totalDuration = services.reduce((sum, s) => sum + s.durationMin, 0);
 
   const professional = await prisma.professional.findFirst({
     where: { id: query.professionalId, tenantId: tenant.id, active: true },
@@ -69,7 +85,7 @@ export const availability = asyncHandler(async (req: Request, res: Response) => 
       status: { not: 'CANCELLED' },
       scheduledAt: { gte: startOfDay(day), lte: endOfDay(day) },
     },
-    include: { service: { select: { durationMin: true } } },
+    include: { items: { include: { service: { select: { durationMin: true } } } }, service: { select: { durationMin: true } } },
   });
 
   const dayStart = new Date(day);
@@ -82,15 +98,17 @@ export const availability = asyncHandler(async (req: Request, res: Response) => 
 
   for (
     let slotStart = new Date(dayStart);
-    slotStart.getTime() + service.durationMin * 60000 <= dayEnd.getTime();
+    slotStart.getTime() + totalDuration * 60000 <= dayEnd.getTime();
     slotStart = new Date(slotStart.getTime() + SLOT_STEP_MIN * 60000)
   ) {
     if (slotStart < now) continue;
 
-    const slotEnd = new Date(slotStart.getTime() + service.durationMin * 60000);
+    const slotEnd = new Date(slotStart.getTime() + totalDuration * 60000);
     const overlaps = existing.some((a) => {
       const aStart = a.scheduledAt;
-      const aDurationMin = a.service?.durationMin ?? 60;
+      const aDurationMin = a.items.length > 0
+        ? a.items.reduce((sum, i) => sum + (i.service?.durationMin ?? 0), 0)
+        : (a.service?.durationMin ?? 60);
       const aEnd = new Date(aStart.getTime() + aDurationMin * 60000);
       return slotStart < aEnd && slotEnd > aStart;
     });
@@ -103,7 +121,7 @@ export const availability = asyncHandler(async (req: Request, res: Response) => 
 
 const bookSchema = z.object({
   professionalId: z.string(),
-  serviceId: z.string(),
+  serviceIds: z.array(z.string()).min(1, 'Selecione ao menos um serviço'),
   scheduledAt: z.string(),
   clientName: z.string().min(2, 'Informe seu nome'),
   clientPhone: z.string().min(8, 'Informe um telefone válido'),
@@ -113,10 +131,9 @@ export const book = asyncHandler(async (req: Request, res: Response) => {
   const tenant = await resolveTenant(req.params.slug as string);
   const data = bookSchema.parse(req.body);
 
-  const service = await prisma.service.findFirst({
-    where: { id: data.serviceId, tenantId: tenant.id, active: true },
-  });
-  if (!service) throw new AppError(404, 'Serviço não encontrado');
+  const services = await resolveServices(tenant.id, data.serviceIds);
+  const totalDuration = services.reduce((sum, s) => sum + s.durationMin, 0);
+  const totalPrice = services.reduce((sum, s) => sum + s.price, 0);
 
   const professional = await prisma.professional.findFirst({
     where: { id: data.professionalId, tenantId: tenant.id, active: true },
@@ -128,7 +145,7 @@ export const book = asyncHandler(async (req: Request, res: Response) => {
     throw new AppError(400, 'Horário inválido');
   }
 
-  const slotEnd = new Date(scheduledAt.getTime() + service.durationMin * 60000);
+  const slotEnd = new Date(scheduledAt.getTime() + totalDuration * 60000);
   const sameDayAppointments = await prisma.appointment.findMany({
     where: {
       tenantId: tenant.id,
@@ -136,11 +153,14 @@ export const book = asyncHandler(async (req: Request, res: Response) => {
       status: { not: 'CANCELLED' },
       scheduledAt: { gte: startOfDay(scheduledAt), lte: endOfDay(scheduledAt) },
     },
-    include: { service: { select: { durationMin: true } } },
+    include: { items: { include: { service: { select: { durationMin: true } } } }, service: { select: { durationMin: true } } },
   });
   const hasConflict = sameDayAppointments.some((a) => {
     const aStart = a.scheduledAt;
-    const aEnd = new Date(aStart.getTime() + (a.service?.durationMin ?? 60) * 60000);
+    const aDurationMin = a.items.length > 0
+      ? a.items.reduce((sum, i) => sum + (i.service?.durationMin ?? 0), 0)
+      : (a.service?.durationMin ?? 60);
+    const aEnd = new Date(aStart.getTime() + aDurationMin * 60000);
     return scheduledAt < aEnd && slotEnd > aStart;
   });
   if (hasConflict) {
@@ -161,13 +181,16 @@ export const book = asyncHandler(async (req: Request, res: Response) => {
       tenantId: tenant.id,
       clientId: client.id,
       professionalId: professional.id,
-      serviceId: service.id,
+      serviceId: services[0].id,
       scheduledAt,
-      price: service.price,
+      price: totalPrice,
       status: 'SCHEDULED',
+      items: {
+        create: services.map((s) => ({ serviceId: s.id, price: s.price })),
+      },
     },
     include: {
-      service: { select: { name: true, price: true, durationMin: true } },
+      items: { include: { service: { select: { name: true, price: true, durationMin: true } } } },
       professional: { select: { name: true } },
     },
   });
@@ -191,7 +214,7 @@ export const myAppointments = asyncHandler(async (req: Request, res: Response) =
   const appointments = await prisma.appointment.findMany({
     where: { tenantId: tenant.id, clientId: client.id },
     include: {
-      service: { select: { name: true, price: true, durationMin: true } },
+      items: { include: { service: { select: { name: true, price: true, durationMin: true } } } },
       professional: { select: { name: true } },
     },
     orderBy: { scheduledAt: 'desc' },
