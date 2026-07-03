@@ -5,28 +5,42 @@ if [ -z "$DATABASE_URL" ]; then
   echo ""
   echo "=============================================="
   echo " ERRO: DATABASE_URL não está configurada!"
-  echo ""
-  echo " No Render:"
-  echo "  1. Crie um PostgreSQL (salonhub-db)"
-  echo "  2. Abra o Web Service → Environment"
-  echo "  3. Add from Database → salonhub-db"
-  echo "  4. Variável: DATABASE_URL"
-  echo "  5. Save e faça Manual Deploy"
+  echo " Render → Web Service → Environment"
+  echo " Add from Database → salonhub-db"
   echo "=============================================="
   echo ""
   exit 1
 fi
 
+WEB_PORT="${PORT:-3000}"
+API_PORT=3001
+
 echo "→ Prisma migrate deploy..."
 npx prisma migrate deploy
 
 echo "→ Seed (demo)..."
-npx tsx prisma/seed.ts
+npx tsx prisma/seed.ts || echo "⚠ Seed ignorado (já existe)"
 
-echo "→ API interna na porta 3001..."
-PORT=3001 HOST=127.0.0.1 node dist/index.js &
-sleep 2
+echo "→ API interna na porta ${API_PORT}..."
+PORT="${API_PORT}" HOST=0.0.0.0 node dist/index.js &
+API_PID=$!
 
-echo "→ Frontend + proxy /api na porta ${PORT:-3000}..."
-cd /app/frontend
-exec npm start -- -p "${PORT:-3000}" -H 0.0.0.0
+echo "→ Aguardando API..."
+for i in 1 2 3 4 5 6 7 8 9 10; do
+  if wget -q -O - "http://127.0.0.1:${API_PORT}/health" >/dev/null 2>&1; then
+    echo "   API ok"
+    break
+  fi
+  if [ "$i" -eq 10 ]; then
+    echo "ERRO: API não respondeu em ${API_PORT}"
+    kill "$API_PID" 2>/dev/null || true
+    exit 1
+  fi
+  sleep 2
+done
+
+echo "→ Frontend na porta ${WEB_PORT}..."
+cd /app/web
+export PORT="${WEB_PORT}"
+export HOSTNAME=0.0.0.0
+exec node server.js
