@@ -1,4 +1,10 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api';
+const API_URL = resolveApiUrl();
+
+function resolveApiUrl(): string {
+  const raw = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api';
+  if (raw.endsWith('/api')) return raw;
+  return `${raw.replace(/\/$/, '')}/api`;
+}
 export const TENANT_SLUG = process.env.NEXT_PUBLIC_TENANT_SLUG || 'studio-regina';
 
 export class ApiError extends Error {

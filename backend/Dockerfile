@@ -13,8 +13,9 @@ ENV NODE_ENV=production
 COPY package*.json ./
 RUN npm ci --omit=dev
 COPY prisma ./prisma/
+COPY scripts ./scripts/
 COPY --from=builder /app/dist ./dist/
 COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma/
-RUN npx prisma generate
+RUN npx prisma generate && chmod +x scripts/docker-start.sh
 EXPOSE 3001
-CMD ["sh", "-c", "npx prisma migrate deploy && npx tsx prisma/seed.ts && node dist/index.js"]
+CMD ["sh", "scripts/docker-start.sh"]
