@@ -48,6 +48,6 @@ echo   Terminal 2: cd frontend ^&^& npm run dev
 echo.
 echo   Frontend: http://localhost:3000
 echo   API:      http://localhost:3001
-echo   Login:    regina@salonhub.demo / senha123
+echo   Login:    riana@gmail.com / 123456
 echo.
 pause

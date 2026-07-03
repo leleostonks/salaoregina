@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 async function main() {
   console.log('🌱 Iniciando seed do SalonHub...\n');
 
-  const password = await bcrypt.hash('senha123', 10);
+  const password = await bcrypt.hash('123456', 10);
 
   const tenant = await prisma.tenant.upsert({
     where: { slug: 'studio-regina' },
@@ -14,19 +14,19 @@ async function main() {
     create: {
       name: 'Studio Regina',
       slug: 'studio-regina',
-      email: 'regina@salonhub.demo',
+      email: 'riana@gmail.com',
       phone: '(11) 99999-0000',
       plan: 'PROFESSIONAL',
     },
   });
 
   const user = await prisma.user.upsert({
-    where: { tenantId_email: { tenantId: tenant.id, email: 'regina@salonhub.demo' } },
+    where: { tenantId_email: { tenantId: tenant.id, email: 'riana@gmail.com' } },
     update: {},
     create: {
       tenantId: tenant.id,
-      name: 'Regina Silva',
-      email: 'regina@salonhub.demo',
+      name: 'Riana',
+      email: 'riana@gmail.com',
       password,
       role: 'OWNER',
     },
@@ -209,12 +209,12 @@ async function main() {
 
   console.log('✅ Seed concluído!\n');
   console.log('  Salão:     Studio Regina');
-  console.log('  E-mail:    regina@salonhub.demo');
-  console.log('  Senha:     senha123');
+  console.log('  E-mail:    riana@gmail.com');
+  console.log('  Senha:     123456');
   console.log(`  Plano:     PROFESSIONAL`);
   console.log(`  Atendimentos criados: ${appointmentCount}`);
   console.log('\n  Login: POST http://localhost:3001/api/auth/login');
-  console.log('  Body:  { "email": "regina@salonhub.demo", "password": "senha123" }\n');
+  console.log('  Body:  { "email": "riana@gmail.com", "password": "123456" }\n');
 }
 
 main()

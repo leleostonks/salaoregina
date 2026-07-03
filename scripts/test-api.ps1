@@ -30,14 +30,14 @@ Test-Case "Health check" {
 Test-Case "Login" {
   $script:login = Invoke-RestMethod -Uri "$Api/auth/login" -Method POST `
     -ContentType "application/json" `
-    -Body '{"email":"regina@salonhub.demo","password":"senha123"}'
+    -Body '{"email":"riana@gmail.com","password":"123456"}'
   if (-not $script:login.token) { throw "no token" }
 }
 
 Test-Case "Auth me" {
   $h = @{ Authorization = "Bearer $($script:login.token)" }
   $me = Invoke-RestMethod -Uri "$Api/auth/me" -Headers $h
-  if ($me.email -ne "regina@salonhub.demo") { throw "wrong email" }
+  if ($me.email -ne "riana@gmail.com") { throw "wrong email" }
 }
 
 Test-Case "Dashboard overview" {

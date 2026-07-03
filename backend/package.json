@@ -24,6 +24,7 @@
     "helmet": "^8.1.0",
     "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.0",
+    "tsx": "^4.20.3",
     "zod": "^3.25.67"
   },
   "devDependencies": {
@@ -34,7 +35,6 @@
     "@types/morgan": "^1.9.10",
     "@types/node": "^22.15.32",
     "prisma": "^6.9.0",
-    "tsx": "^4.20.3",
     "typescript": "^5.8.3"
   }
 }

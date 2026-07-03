@@ -22,8 +22,8 @@ npm run dev      # http://localhost:3001
 
 | Campo   | Valor                    |
 |---------|--------------------------|
-| E-mail  | regina@salonhub.demo     |
-| Senha   | senha123                 |
+| E-mail  | riana@gmail.com     |
+| Senha   | 123456                 |
 | Plano   | PROFESSIONAL             |
 
 ## Endpoints
@@ -55,7 +55,7 @@ npm run dev      # http://localhost:3001
 ```bash
 curl -X POST http://localhost:3001/api/auth/login \
   -H "Content-Type: application/json" \
-  -d "{\"email\":\"regina@salonhub.demo\",\"password\":\"senha123\"}"
+  -d "{\"email\":\"riana@gmail.com\",\"password\":\"123456\"}"
 ```
 
 ## Exemplo — Dashboard

@@ -118,7 +118,7 @@ npm run dev
 
 Acesse: **http://localhost:3000**
 
-Login: `regina@salonhub.demo` / `senha123`
+Login: `riana@gmail.com` / `123456`
 
 ---
 

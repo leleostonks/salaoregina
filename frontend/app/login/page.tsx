@@ -37,18 +37,18 @@ export default function LoginPage() {
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="label" htmlFor="email">E-mail</label>
-            <input className="input" id="email" name="email" type="email" defaultValue="regina@salonhub.demo" required />
+            <input className="input" id="email" name="email" type="email" defaultValue="riana@gmail.com" required />
           </div>
           <div>
             <label className="label" htmlFor="password">Senha</label>
-            <input className="input" id="password" name="password" type="password" defaultValue="senha123" required />
+            <input className="input" id="password" name="password" type="password" defaultValue="123456" required />
           </div>
           {error && <p className="text-danger text-sm">{error}</p>}
           <button type="submit" className="btn btn-primary w-full" disabled={loading}>
             {loading ? 'Entrando...' : 'Entrar'}
           </button>
         </form>
-        <p className="text-center text-xs text-text-muted mt-4">Demo: regina@salonhub.demo / senha123</p>
+        <p className="text-center text-xs text-text-muted mt-4">Demo: riana@gmail.com / 123456</p>
         <Link href="/" className="block text-center text-accent text-sm mt-3">← Voltar ao site</Link>
       </div>
     </div>
