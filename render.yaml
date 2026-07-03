@@ -1,0 +1,44 @@
+databases:
+  - name: salonhub-db
+    plan: free
+    databaseName: salonhub
+    user: salonhub
+
+services:
+  - type: web
+    name: salonhub-backend
+    runtime: docker
+    rootDir: backend
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: HOST
+        value: 0.0.0.0
+      - key: DATABASE_URL
+        fromDatabase:
+          name: salonhub-db
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_EXPIRES_IN
+        value: 7d
+      # Ajuste para a URL real do frontend após o primeiro deploy
+      # (o Render pode adicionar um sufixo ao nome se já estiver em uso).
+      - key: CORS_ORIGIN
+        value: https://salonhub-frontend.onrender.com
+
+  - type: web
+    name: salonhub-frontend
+    runtime: node
+    rootDir: frontend
+    buildCommand: npm ci && npm run build
+    startCommand: npm start -- -p $PORT
+    plan: free
+    envVars:
+      # Ajuste para a URL real do backend após o primeiro deploy.
+      - key: NEXT_PUBLIC_API_URL
+        value: https://salonhub-backend.onrender.com/api

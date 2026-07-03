@@ -1,6 +1,25 @@
 # SalonHub — Guia de Deploy
 
-## Arquitetura em produção
+## Opção A — Render (blueprint, tudo em um lugar)
+
+Existe um `render.yaml` na raiz do projeto que descreve os 3 recursos (backend, frontend e Postgres).
+
+1. Suba o repositório para o GitHub
+2. Em [dashboard.render.com](https://dashboard.render.com) → **New** → **Blueprint** → selecione o repositório
+3. Render lê o `render.yaml` e cria:
+   - `salonhub-db` — Postgres gerenciado (free tier expira em 90 dias, veja abaixo)
+   - `salonhub-backend` — API Node/Express via Docker (`backend/Dockerfile`), roda `prisma migrate deploy` automaticamente no start
+   - `salonhub-frontend` — Next.js via runtime Node nativo
+4. Depois do primeiro deploy, confira as URLs reais atribuídas (`https://salonhub-backend-xxxx.onrender.com`, `https://salonhub-frontend-xxxx.onrender.com`) — se o Render adicionar sufixo por conflito de nome, atualize manualmente:
+   - `CORS_ORIGIN` no serviço backend → URL do frontend
+   - `NEXT_PUBLIC_API_URL` no serviço frontend → `URL do backend` + `/api`
+5. `JWT_SECRET` é gerado automaticamente pelo Render (`generateValue: true`)
+
+**Atenção free tier:** serviços web free "dormem" após 15 min sem tráfego (primeira requisição demora ~30-50s) e o banco free é apagado após 90 dias — para produção real, migre para planos pagos.
+
+## Opção B — Vercel + Railway + Neon
+
+### Arquitetura em produção
 
 ```
 Next.js (Vercel)  →  API Node.js (Railway)  →  PostgreSQL (Neon/Supabase)
