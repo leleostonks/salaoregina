@@ -43,6 +43,9 @@ export function errorHandler(
     if (err.code === 'P2025') {
       return res.status(404).json({ error: 'Registro não encontrado' });
     }
+    if (err.code === 'P2003') {
+      return res.status(409).json({ error: 'Não é possível excluir: existem registros vinculados a este item' });
+    }
   }
 
   console.error(err);

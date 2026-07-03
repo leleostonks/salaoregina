@@ -86,6 +86,7 @@ export const api = {
     list: () => request<any[]>('/clients'),
     stats: () => request<any>('/clients/stats'),
     create: (d: object) => request<any>('/clients', { method: 'POST', body: JSON.stringify(d) }),
+    remove: (id: string) => request<any>(`/clients/${id}`, { method: 'DELETE' }),
   },
   appointments: {
     list: () => request<any[]>('/appointments'),
