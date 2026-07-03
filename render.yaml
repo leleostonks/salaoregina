@@ -25,8 +25,6 @@ services:
         generateValue: true
       - key: JWT_EXPIRES_IN
         value: 7d
-      # Ajuste para a URL real do frontend após o primeiro deploy
-      # (o Render pode adicionar um sufixo ao nome se já estiver em uso).
       - key: CORS_ORIGIN
         value: https://salonhub-frontend.onrender.com
 
@@ -38,6 +36,5 @@ services:
     startCommand: npm start -- -p $PORT
     plan: free
     envVars:
-      # Ajuste para a URL real do backend após o primeiro deploy.
       - key: NEXT_PUBLIC_API_URL
-        value: https://salonhub-backend.onrender.com/api
+        value: https://salonhub-backend-tp5t.onrender.com/api
