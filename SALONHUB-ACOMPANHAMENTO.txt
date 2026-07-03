@@ -1,0 +1,339 @@
+================================================================================
+  SALONHUB — ARQUIVO DE ACOMPANHAMENTO DO PROJETO
+  O Sistema Operacional do Seu Salão
+================================================================================
+  Última atualização: 02/07/2026
+  Status geral: [X] Planejamento  [X] Landing Page  [X] MVP Backend  [X] Frontend  [X] SaaS Multi-tenant
+================================================================================
+
+
+--------------------------------------------------------------------------------
+1. POSICIONAMENTO E PITCH
+--------------------------------------------------------------------------------
+
+NOME DO PRODUTO:
+  SalonHub — O Dashboard Inteligente para Salões de Beleza
+
+TAGLINE PRINCIPAL:
+  "O sistema operacional do seu salão."
+
+TAGLINE ALTERNATIVA:
+  "Transformamos os dados do seu salão em crescimento."
+
+PROPOSTA DE VALOR:
+  Plataforma de gestão com dashboards inteligentes desenvolvida para
+  transformar dados em decisões. O gestor sabe em tempo real quanto fatura,
+  quem gera mais lucro, quais serviços vendem mais e como está a saúde
+  financeira do negócio — tudo em um único lugar.
+
+PROBLEMA QUE RESOLVE:
+  - Donos de salão administram no "feeling"
+  - Horas perdidas analisando planilhas desatualizadas
+  - Comissões calculadas manualmente
+  - Incerteza sobre lucro real e fluxo de caixa
+  - Dificuldade em medir desempenho da equipe
+  - Decisões baseadas em intuição, não em dados
+
+ELEVATOR PITCH (30 segundos):
+  "O SalonHub é uma plataforma inteligente de gestão para salões de beleza.
+  Em vez de o proprietário perder horas analisando planilhas, o sistema mostra
+  em tempo real o faturamento, lucro, desempenho dos profissionais, serviços
+  mais vendidos, fluxo de caixa e indicadores estratégicos. Tudo em uma
+  interface simples, moderna e acessível de qualquer dispositivo. Assim, o
+  gestor toma decisões mais rápidas, aumenta a lucratividade e faz o salão
+  crescer com base em dados."
+
+PITCH ABERTO COM DOR:
+  "Você administra um salão, mas não sabe com certeza se está lucrando — só
+  sente que o caixa fecha no fim do mês. O SalonHub mostra em tempo real onde
+  o dinheiro entra, onde sai e quem no time realmente gera resultado."
+
+
+--------------------------------------------------------------------------------
+2. PÚBLICO-ALVO
+--------------------------------------------------------------------------------
+
+  [ ] Salões de Beleza
+  [ ] Barbearias
+  [ ] Clínicas de Estética
+  [ ] Esmalterias
+  [ ] Studios de Cílios
+  [ ] Spas
+
+PERFIL DO CLIENTE IDEAL:
+  - Proprietário ou gestor de salão com 2 a 15 profissionais
+  - Já usa planilhas ou sistema básico de agenda
+  - Quer crescer mas não tem visibilidade dos números
+  - Disposto a pagar assinatura mensal por gestão profissional
+
+
+--------------------------------------------------------------------------------
+3. FUNCIONALIDADES DO SISTEMA
+--------------------------------------------------------------------------------
+
+📊 DASHBOARD EM TEMPO REAL
+  [X] Faturamento diário, semanal e mensal
+  [X] Ticket médio
+  [X] Quantidade de atendimentos
+  [X] Crescimento do negócio
+  [X] Comparativos entre períodos
+
+💰 CONTROLE FINANCEIRO
+  [X] Receitas
+  [X] Despesas
+  [X] Lucro
+  [X] Fluxo de caixa
+  [X] Contas a pagar e receber
+
+👩‍🎨 GESTÃO DA EQUIPE
+  [X] Ranking de profissionais
+  [X] Comissão automática
+  [X] Produtividade individual
+  [X] Agenda de cada colaborador
+
+💇 ANÁLISE DE SERVIÇOS
+  [X] Serviços mais vendidos
+  [X] Serviços mais lucrativos
+  [X] Tempo médio de atendimento
+
+👥 CLIENTES
+  [X] Novos clientes
+  [X] Clientes recorrentes
+  [X] Frequência de retorno
+  [X] Histórico completo
+
+📦 ESTOQUE
+  [X] Controle de produtos
+  [X] Alertas de estoque baixo
+  [ ] Consumo por serviço
+
+📈 INDICADORES INTELIGENTES
+  [X] Meta de faturamento
+  [X] Meta por profissional
+  [X] Comparativo mensal
+  [X] Tendências de crescimento
+
+
+--------------------------------------------------------------------------------
+4. DIFERENCIAIS DO PRODUTO
+--------------------------------------------------------------------------------
+
+  [X] Interface moderna e fácil de usar
+  [X] Dados atualizados automaticamente (API em tempo real)
+  [X] Funciona em computador, tablet e celular (landing responsiva)
+  [X] Cada salão possui seus próprios dados e acesso seguro (multi-tenant)
+  [X] Painéis personalizados (dashboard com indicadores)
+  [X] Sem instalação — acesso via navegador
+  [ ] Teste grátis de 14 dias (gateway pendente)
+
+
+--------------------------------------------------------------------------------
+5. BENEFÍCIOS PARA O CLIENTE
+--------------------------------------------------------------------------------
+
+  ✔ Saiba onde está ganhando dinheiro
+  ✔ Descubra quais profissionais entregam os melhores resultados
+  ✔ Tome decisões baseadas em dados
+  ✔ Economize tempo com relatórios automáticos
+  ✔ Acompanhe seu negócio de qualquer lugar
+
+
+--------------------------------------------------------------------------------
+6. MODELO DE NEGÓCIO — PLANOS E PREÇOS
+--------------------------------------------------------------------------------
+
+Modelo: Assinatura mensal (SaaS)
+Teste grátis: 14 dias (sugerido)
+
+┌─────────────────┬──────────────┬────────────────────────────────────────────┐
+│ PLANO           │ PREÇO/MÊS    │ PROMESSA                                   │
+├─────────────────┼──────────────┼────────────────────────────────────────────┤
+│ Básico          │ R$ 99        │ Saiba quanto você fatura e lucra           │
+│ Profissional    │ R$ 199       │ Gerencie equipe, comissões e metas         │
+│ Premium         │ R$ 349       │ Controle total do seu negócio              │
+└─────────────────┴──────────────┴────────────────────────────────────────────┘
+
+DETALHAMENTO DOS PLANOS:
+
+  BÁSICO — R$ 99/mês
+    - Dashboard em tempo real
+    - Faturamento e ticket médio
+    - Até 3 profissionais
+    - Relatórios básicos
+    - Acesso mobile
+
+  PROFISSIONAL — R$ 199/mês (MAIS POPULAR)
+    - Tudo do Básico
+    - Até 10 profissionais
+    - Comissão automática
+    - Ranking e produtividade
+    - Controle financeiro completo
+    - Análise de serviços
+    - Metas e indicadores
+
+  PREMIUM — R$ 349/mês
+    - Tudo do Profissional
+    - Profissionais ilimitados
+    - Controle de estoque
+    - Múltiplas unidades
+    - Painéis personalizados
+    - Suporte prioritário
+    - Exportação de relatórios
+
+NOTA: Os valores são exemplos e podem ser ajustados conforme funcionalidades.
+
+
+--------------------------------------------------------------------------------
+7. ARQUIVOS DO PROJETO
+--------------------------------------------------------------------------------
+
+  [X] index.html                    — Landing page principal
+  [X] app/                          — Frontend do painel (dashboard)
+  [X] styles.css                    — Estilos da landing page
+  [X] script.js                     — Interatividade (menu, animações)
+  [X] SALONHUB-ACOMPANHAMENTO.txt   — Este arquivo de acompanhamento
+  [X] SALONHUB-API.txt              — Documentação completa da API
+  [X] backend/                      — API REST (Node.js + Express + Prisma)
+
+COMO RODAR LOCALMENTE:
+
+  Landing page:
+    python -m http.server 8080   (na pasta raiz)
+    Abrir: http://localhost:8080
+
+  Painel (frontend):
+    http://localhost:8080/app/
+
+  Backend API:
+    cd backend
+    npm install
+    npm run setup
+    npm run dev
+    API: http://localhost:3001
+    Health: http://localhost:3001/health
+
+  Login de teste:
+    E-mail: regina@salonhub.demo
+    Senha:  senha123
+
+
+--------------------------------------------------------------------------------
+8. ROADMAP DE DESENVOLVIMENTO
+--------------------------------------------------------------------------------
+
+FASE 1 — MARKETING (EM ANDAMENTO)
+  [X] Definir posicionamento e pitch
+  [X] Criar landing page
+  [X] Definir planos e preços
+  [ ] Registrar domínio (ex: salonhub.com.br)
+  [ ] Configurar e-mail profissional
+  [ ] Criar redes sociais (Instagram, LinkedIn)
+
+FASE 2 — MVP BACKEND (CONCLUÍDO)
+  [X] Stack: Node.js + Express + TypeScript + Prisma + SQLite
+  [X] Autenticação JWT e registro de salões
+  [X] Dashboard (faturamento, ticket médio, atendimentos)
+  [X] Cadastro de profissionais
+  [X] Cadastro de serviços
+  [X] Registro de atendimentos/vendas
+  [X] Frontend do dashboard (painel logado)
+
+FASE 3 — SAAS MULTI-TENANT (PARCIAL)
+  [X] Isolamento de dados por salão (tenant)
+  [X] Registro/onboarding de novos salões via API
+  [X] Limites por plano (BASIC/PROFESSIONAL/PREMIUM)
+  [ ] Painel de administração do sistema
+  [ ] Gestão de assinaturas (gateway)
+
+FASE 4 — FUNCIONALIDADES AVANÇADAS (PARCIAL)
+  [X] Controle financeiro completo
+  [X] Comissão automática
+  [X] Gestão de clientes
+  [X] Controle de estoque (plano Premium)
+  [X] Metas e indicadores
+  [ ] Relatórios exportáveis (PDF/Excel)
+
+FASE 5 — MONETIZAÇÃO
+  [ ] Integração com gateway de pagamento (Stripe, Mercado Pago, Asaas)
+  [ ] Fluxo de assinatura e cobrança recorrente
+  [ ] Trial de 14 dias automatizado
+  [ ] Upgrade/downgrade de planos
+
+
+--------------------------------------------------------------------------------
+9. CHECKLIST DE ACOMPANHAMENTO SEMANAL
+--------------------------------------------------------------------------------
+
+Semana de: ___/___/2026
+
+  MARKETING
+  [ ] Landing page publicada online
+  [ ] Primeiros contatos/prospects identificados
+  [ ] Pitch testado com pelo menos 1 dono de salão
+
+  PRODUTO
+  [ ] Funcionalidade em desenvolvimento: _______________
+  [ ] Bug/correção pendente: _______________
+  [ ] Teste realizado: _______________
+
+  NEGÓCIO
+  [ ] Cliente em trial: _______________
+  [ ] Cliente pagante: _______________
+  [ ] Receita mensal (MRR): R$ _______________
+  [ ] Feedback recebido: _______________
+
+  PRÓXIMA SEMANA
+  [ ] Prioridade 1: _______________
+  [ ] Prioridade 2: _______________
+  [ ] Prioridade 3: _______________
+
+
+--------------------------------------------------------------------------------
+10. MÉTRICAS DE SUCESSO (KPIs)
+--------------------------------------------------------------------------------
+
+  Meta Mês 1:  3 clientes em trial
+  Meta Mês 3:  10 clientes pagantes
+  Meta Mês 6:  30 clientes pagantes | MRR R$ 4.000+
+  Meta Ano 1:  100 clientes pagantes | MRR R$ 15.000+
+
+  KPIs para acompanhar:
+  - MRR (Monthly Recurring Revenue)
+  - Churn rate (taxa de cancelamento)
+  - CAC (custo de aquisição de cliente)
+  - LTV (valor vitalício do cliente)
+  - NPS (satisfação do cliente)
+
+
+--------------------------------------------------------------------------------
+11. NOTAS E IDEIAS
+--------------------------------------------------------------------------------
+
+  (Use este espaço para anotar feedbacks, ideias e decisões)
+
+  Data: ___/___/____
+  Nota: _______________________________________________________________
+
+  Data: ___/___/____
+  Nota: _______________________________________________________________
+
+  Data: ___/___/____
+  Nota: _______________________________________________________________
+
+
+--------------------------------------------------------------------------------
+12. CONTATOS E PARCERIAS
+--------------------------------------------------------------------------------
+
+  Prospect 1: _______________ | Salão: _______________ | Status: _______
+  Prospect 2: _______________ | Salão: _______________ | Status: _______
+  Prospect 3: _______________ | Salão: _______________ | Status: _______
+
+  Parceiro/Integração: _______________
+  Investidor/Apoio: _______________
+
+
+================================================================================
+  FIM DO ARQUIVO DE ACOMPANHAMENTO
+  Atualize este arquivo conforme o projeto evolui.
+================================================================================

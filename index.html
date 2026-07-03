@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="SalonHub - O sistema operacional do seu salão. Dashboard inteligente para gestão de salões de beleza, barbearias e clínicas de estética.">
+  <title>SalonHub — O Sistema Operacional do Seu Salão</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="container header__inner">
+      <a href="#" class="logo">
+        <span class="logo__icon">✦</span>
+        <span class="logo__text">SalonHub</span>
+      </a>
+      <nav class="nav" id="nav">
+        <a href="#funcionalidades">Funcionalidades</a>
+        <a href="#beneficios">Benefícios</a>
+        <a href="#planos">Planos</a>
+        <a href="#publico">Para quem é</a>
+      </nav>
+      <div class="header__actions">
+        <a href="app/" class="btn btn--ghost">Entrar</a>
+        <a href="app/" class="btn btn--primary">Acessar painel</a>
+      </div>
+      <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero__bg"></div>
+    <div class="container hero__inner">
+      <div class="hero__badge">Plataforma SaaS para o mercado de beleza</div>
+      <h1 class="hero__title">
+        O sistema operacional<br>
+        <em>do seu salão</em>
+      </h1>
+      <p class="hero__subtitle">
+        Pare de administrar no feeling. Saiba em tempo real quanto você fatura,
+        quem gera mais lucro, quais serviços vendem mais e como está a saúde
+        financeira do seu negócio — tudo em um único lugar.
+      </p>
+      <div class="hero__cta">
+        <a href="app/" class="btn btn--primary btn--lg">Acessar o painel</a>
+        <a href="#funcionalidades" class="btn btn--outline btn--lg">Ver funcionalidades</a>
+      </div>
+      <div class="hero__stats">
+        <div class="stat">
+          <span class="stat__value">+40%</span>
+          <span class="stat__label">mais clareza nas decisões</span>
+        </div>
+        <div class="stat">
+          <span class="stat__value">5h</span>
+          <span class="stat__label">economizadas por semana</span>
+        </div>
+        <div class="stat">
+          <span class="stat__value">100%</span>
+          <span class="stat__label">dados em tempo real</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Problema -->
+  <section class="problem">
+    <div class="container">
+      <div class="problem__grid">
+        <div class="problem__text">
+          <span class="section-tag">O problema</span>
+          <h2>Você administra um salão,<br>mas não sabe se está lucrando</h2>
+          <p>
+            Planilhas desatualizadas. Comissões calculadas na mão. Relatórios que
+            demoram horas. Sem saber qual profissional ou serviço realmente gera
+            resultado. A maioria dos donos de salão administra no feeling — e paga
+            caro por isso.
+          </p>
+          <p class="problem__highlight">
+            O SalonHub transforma os dados do seu salão em crescimento.
+          </p>
+        </div>
+        <div class="problem__cards">
+          <div class="pain-card">
+            <span class="pain-card__icon">📋</span>
+            <p>Horas perdidas em planilhas e anotações manuais</p>
+          </div>
+          <div class="pain-card">
+            <span class="pain-card__icon">❓</span>
+            <p>Incerteza sobre lucro real e fluxo de caixa</p>
+          </div>
+          <div class="pain-card">
+            <span class="pain-card__icon">👥</span>
+            <p>Dificuldade em medir desempenho da equipe</p>
+          </div>
+          <div class="pain-card">
+            <span class="pain-card__icon">📉</span>
+            <p>Decisões baseadas em intuição, não em dados</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Funcionalidades -->
+  <section class="features" id="funcionalidades">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">O que o sistema oferece</span>
+        <h2>Tudo que você precisa para gerir com inteligência</h2>
+        <p>Uma plataforma completa de gestão com dashboards inteligentes desenvolvida para transformar dados em decisões.</p>
+      </div>
+      <div class="features__grid">
+
+        <article class="feature-card">
+          <div class="feature-card__icon">📊</div>
+          <h3>Dashboard em tempo real</h3>
+          <ul>
+            <li>Faturamento diário, semanal e mensal</li>
+            <li>Ticket médio e quantidade de atendimentos</li>
+            <li>Crescimento do negócio</li>
+            <li>Comparativos entre períodos</li>
+          </ul>
+        </article>
+
+        <article class="feature-card">
+          <div class="feature-card__icon">💰</div>
+          <h3>Controle Financeiro</h3>
+          <ul>
+            <li>Receitas, despesas e lucro</li>
+            <li>Fluxo de caixa</li>
+            <li>Contas a pagar e receber</li>
+          </ul>
+        </article>
+
+        <article class="feature-card">
+          <div class="feature-card__icon">👩‍🎨</div>
+          <h3>Gestão da Equipe</h3>
+          <ul>
+            <li>Ranking de profissionais</li>
+            <li>Comissão automática</li>
+            <li>Produtividade individual</li>
+            <li>Agenda de cada colaborador</li>
+          </ul>
+        </article>
+
+        <article class="feature-card">
+          <div class="feature-card__icon">💇</div>
+          <h3>Análise de Serviços</h3>
+          <ul>
+            <li>Serviços mais vendidos</li>
+            <li>Serviços mais lucrativos</li>
+            <li>Tempo médio de atendimento</li>
+          </ul>
+        </article>
+
+        <article class="feature-card">
+          <div class="feature-card__icon">👥</div>
+          <h3>Clientes</h3>
+          <ul>
+            <li>Novos e clientes recorrentes</li>
+            <li>Frequência de retorno</li>
+            <li>Histórico completo</li>
+          </ul>
+        </article>
+
+        <article class="feature-card">
+          <div class="feature-card__icon">📦</div>
+          <h3>Estoque</h3>
+          <ul>
+            <li>Controle de produtos</li>
+            <li>Alertas de estoque baixo</li>
+            <li>Consumo por serviço</li>
+          </ul>
+        </article>
+
+        <article class="feature-card feature-card--wide">
+          <div class="feature-card__icon">📈</div>
+          <h3>Indicadores Inteligentes</h3>
+          <ul class="feature-card__inline-list">
+            <li>Meta de faturamento</li>
+            <li>Meta por profissional</li>
+            <li>Comparativo mensal</li>
+            <li>Tendências de crescimento</li>
+          </ul>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Diferenciais -->
+  <section class="diffs" id="beneficios">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Diferenciais</span>
+        <h2>Por que escolher o SalonHub</h2>
+      </div>
+      <div class="diffs__grid">
+        <div class="diff-item">
+          <span class="diff-item__check">✅</span>
+          <div>
+            <strong>Interface moderna</strong>
+            <p>Design limpo e profissional, fácil de usar no dia a dia.</p>
+          </div>
+        </div>
+        <div class="diff-item">
+          <span class="diff-item__check">✅</span>
+          <div>
+            <strong>Dados atualizados automaticamente</strong>
+            <p>Sem exportar planilhas. Tudo sincronizado em tempo real.</p>
+          </div>
+        </div>
+        <div class="diff-item">
+          <span class="diff-item__check">✅</span>
+          <div>
+            <strong>Multi-dispositivo</strong>
+            <p>Funciona em computador, tablet e celular.</p>
+          </div>
+        </div>
+        <div class="diff-item">
+          <span class="diff-item__check">✅</span>
+          <div>
+            <strong>Dados isolados e seguros</strong>
+            <p>Cada salão possui seus próprios dados com acesso protegido.</p>
+          </div>
+        </div>
+        <div class="diff-item">
+          <span class="diff-item__check">✅</span>
+          <div>
+            <strong>Painéis personalizados</strong>
+            <p>Configure os indicadores que importam para o seu negócio.</p>
+          </div>
+        </div>
+        <div class="diff-item">
+          <span class="diff-item__check">✅</span>
+          <div>
+            <strong>Sem instalação</strong>
+            <p>Acesse pelo navegador. Sem servidor, sem complicação.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Benefícios -->
+  <section class="benefits">
+    <div class="container">
+      <div class="benefits__inner">
+        <h2>Decisões mais rápidas.<br>Resultados maiores.</h2>
+        <ul class="benefits__list">
+          <li>Saiba onde está ganhando dinheiro</li>
+          <li>Descubra quais profissionais entregam os melhores resultados</li>
+          <li>Tome decisões baseadas em dados, não em achismo</li>
+          <li>Economize tempo com relatórios automáticos</li>
+          <li>Acompanhe seu negócio de qualquer lugar</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Público -->
+  <section class="audience" id="publico">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Para quem é</span>
+        <h2>Feito para o mercado de beleza e bem-estar</h2>
+      </div>
+      <div class="audience__tags">
+        <span class="audience__tag">Salões de Beleza</span>
+        <span class="audience__tag">Barbearias</span>
+        <span class="audience__tag">Clínicas de Estética</span>
+        <span class="audience__tag">Esmalterias</span>
+        <span class="audience__tag">Studios de Cílios</span>
+        <span class="audience__tag">Spas</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Planos -->
+  <section class="pricing" id="planos">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Planos</span>
+        <h2>Escolha o plano ideal para o seu salão</h2>
+        <p>Assinatura mensal. Cancele quando quiser. Teste grátis por 14 dias.</p>
+      </div>
+      <div class="pricing__grid">
+
+        <article class="plan-card">
+          <h3 class="plan-card__name">Básico</h3>
+          <p class="plan-card__promise">Saiba quanto você fatura e lucra</p>
+          <div class="plan-card__price">
+            <span class="plan-card__currency">R$</span>
+            <span class="plan-card__amount">99</span>
+            <span class="plan-card__period">/mês</span>
+          </div>
+          <ul class="plan-card__features">
+            <li>Dashboard em tempo real</li>
+            <li>Faturamento e ticket médio</li>
+            <li>Até 3 profissionais</li>
+            <li>Relatórios básicos</li>
+            <li>Acesso mobile</li>
+          </ul>
+          <a href="#" class="btn btn--outline btn--block">Começar agora</a>
+        </article>
+
+        <article class="plan-card plan-card--featured">
+          <div class="plan-card__badge">Mais popular</div>
+          <h3 class="plan-card__name">Profissional</h3>
+          <p class="plan-card__promise">Gerencie equipe, comissões e metas</p>
+          <div class="plan-card__price">
+            <span class="plan-card__currency">R$</span>
+            <span class="plan-card__amount">199</span>
+            <span class="plan-card__period">/mês</span>
+          </div>
+          <ul class="plan-card__features">
+            <li>Tudo do Básico</li>
+            <li>Até 10 profissionais</li>
+            <li>Comissão automática</li>
+            <li>Ranking e produtividade</li>
+            <li>Controle financeiro completo</li>
+            <li>Análise de serviços</li>
+            <li>Metas e indicadores</li>
+          </ul>
+          <a href="#" class="btn btn--primary btn--block">Começar agora</a>
+        </article>
+
+        <article class="plan-card">
+          <h3 class="plan-card__name">Premium</h3>
+          <p class="plan-card__promise">Controle total do seu negócio</p>
+          <div class="plan-card__price">
+            <span class="plan-card__currency">R$</span>
+            <span class="plan-card__amount">349</span>
+            <span class="plan-card__period">/mês</span>
+          </div>
+          <ul class="plan-card__features">
+            <li>Tudo do Profissional</li>
+            <li>Profissionais ilimitados</li>
+            <li>Controle de estoque</li>
+            <li>Múltiplas unidades</li>
+            <li>Painéis personalizados</li>
+            <li>Suporte prioritário</li>
+            <li>Exportação de relatórios</li>
+          </ul>
+          <a href="#" class="btn btn--outline btn--block">Começar agora</a>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Elevator Pitch / CTA final -->
+  <section class="cta-final">
+    <div class="container cta-final__inner">
+      <blockquote class="pitch">
+        "O SalonHub é uma plataforma inteligente de gestão para salões de beleza.
+        Em vez de o proprietário perder horas analisando planilhas, o sistema mostra
+        em tempo real o faturamento, lucro, desempenho dos profissionais, serviços
+        mais vendidos, fluxo de caixa e indicadores estratégicos. Tudo em uma interface
+        simples, moderna e acessível de qualquer dispositivo."
+      </blockquote>
+      <h2>Transforme os dados do seu salão em crescimento</h2>
+      <p>Teste grátis por 14 dias. Sem cartão de crédito.</p>
+      <a href="app/" class="btn btn--primary btn--lg">Acessar o painel</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <a href="#" class="logo">
+          <span class="logo__icon">✦</span>
+          <span class="logo__text">SalonHub</span>
+        </a>
+        <p>O sistema operacional do seu salão.</p>
+      </div>
+      <div class="footer__links">
+        <div>
+          <strong>Produto</strong>
+          <a href="#funcionalidades">Funcionalidades</a>
+          <a href="#planos">Planos</a>
+          <a href="#beneficios">Benefícios</a>
+        </div>
+        <div>
+          <strong>Empresa</strong>
+          <a href="#">Sobre</a>
+          <a href="#">Contato</a>
+          <a href="#">Blog</a>
+        </div>
+        <div>
+          <strong>Legal</strong>
+          <a href="#">Termos de uso</a>
+          <a href="#">Privacidade</a>
+        </div>
+      </div>
+      <p class="footer__copy">&copy; 2026 SalonHub. Todos os direitos reservados.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

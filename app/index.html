@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SalonHub — Painel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+
+  <!-- Login -->
+  <div id="loginScreen" class="login-screen">
+    <div class="login-card">
+      <div class="login-brand">
+        <span class="logo-icon">✦</span>
+        <h1>SalonHub</h1>
+        <p>O sistema operacional do seu salão</p>
+      </div>
+      <form id="loginForm" class="login-form">
+        <div class="form-group">
+          <label for="email">E-mail</label>
+          <input type="email" id="email" placeholder="seu@email.com" required autocomplete="email">
+        </div>
+        <div class="form-group">
+          <label for="password">Senha</label>
+          <input type="password" id="password" placeholder="••••••••" required autocomplete="current-password">
+        </div>
+        <p id="loginError" class="form-error hidden"></p>
+        <button type="submit" class="btn btn--primary btn--block">Entrar</button>
+      </form>
+      <p class="login-hint">Demo: regina@salonhub.demo / senha123</p>
+      <a href="../index.html" class="login-back">← Voltar ao site</a>
+    </div>
+  </div>
+
+  <!-- App -->
+  <div id="app" class="app hidden">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar__brand">
+        <span class="logo-icon">✦</span>
+        <span>SalonHub</span>
+      </div>
+      <nav class="sidebar__nav" id="nav">
+        <a href="#dashboard" class="nav-item active" data-page="dashboard">
+          <span class="nav-icon">📊</span> Dashboard
+        </a>
+        <a href="#atendimentos" class="nav-item" data-page="atendimentos">
+          <span class="nav-icon">📅</span> Atendimentos
+        </a>
+        <a href="#profissionais" class="nav-item" data-page="profissionais">
+          <span class="nav-icon">👩‍🎨</span> Profissionais
+        </a>
+        <a href="#servicos" class="nav-item" data-page="servicos">
+          <span class="nav-icon">💇</span> Serviços
+        </a>
+        <a href="#clientes" class="nav-item" data-page="clientes">
+          <span class="nav-icon">👥</span> Clientes
+        </a>
+        <a href="#financeiro" class="nav-item" data-page="financeiro">
+          <span class="nav-icon">💰</span> Financeiro
+        </a>
+        <a href="#metas" class="nav-item" data-page="metas">
+          <span class="nav-icon">📈</span> Metas
+        </a>
+      </nav>
+      <div class="sidebar__footer">
+        <div class="user-info" id="userInfo">
+          <strong id="tenantName">—</strong>
+          <span id="userName">—</span>
+        </div>
+        <button class="btn btn--ghost btn--sm" id="logoutBtn">Sair</button>
+      </div>
+    </aside>
+
+    <div class="main">
+      <header class="topbar">
+        <button class="menu-btn" id="menuBtn" aria-label="Menu">☰</button>
+        <h1 class="page-title" id="pageTitle">Dashboard</h1>
+        <div class="topbar__actions" id="topbarActions"></div>
+      </header>
+      <main class="content" id="content">
+        <div class="loading">Carregando...</div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div id="modal" class="modal hidden">
+    <div class="modal__backdrop" id="modalBackdrop"></div>
+    <div class="modal__box" id="modalBox">
+      <div class="modal__header">
+        <h2 id="modalTitle">—</h2>
+        <button class="modal__close" id="modalClose">×</button>
+      </div>
+      <div class="modal__body" id="modalBody"></div>
+    </div>
+  </div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,178 @@
+================================================================================
+  SALONHUB — DOCUMENTAÇÃO DA API (BACKEND)
+================================================================================
+  Base URL: http://localhost:3001
+  Última atualização: 02/07/2026
+================================================================================
+
+
+--------------------------------------------------------------------------------
+CREDENCIAIS DE TESTE (SEED)
+--------------------------------------------------------------------------------
+
+  E-mail:  regina@salonhub.demo
+  Senha:   senha123
+  Salão:   Studio Regina
+  Plano:   PROFESSIONAL
+
+
+--------------------------------------------------------------------------------
+COMO RODAR O BACKEND
+--------------------------------------------------------------------------------
+
+  cd backend
+  npm install
+  npm run setup     # cria banco + dados de exemplo
+  npm run dev       # inicia em http://localhost:3001
+
+  Health check: GET http://localhost:3001/health
+
+
+--------------------------------------------------------------------------------
+AUTENTICAÇÃO
+--------------------------------------------------------------------------------
+
+Todas as rotas (exceto /health, /auth/register e /auth/login) exigem:
+
+  Header: Authorization: Bearer <token>
+
+O token é retornado no login/registro e contém o tenantId (salão) do usuário.
+Cada salão só acessa seus próprios dados (multi-tenant).
+
+
+--------------------------------------------------------------------------------
+ROTAS PÚBLICAS
+--------------------------------------------------------------------------------
+
+POST /api/auth/register
+  Cadastra novo salão + proprietário (plano BASIC automático)
+  Body: { salonName, ownerName, email, password, phone? }
+
+POST /api/auth/login
+  Body: { email, password }
+  Retorna: { token, user, tenant }
+
+
+--------------------------------------------------------------------------------
+ROTAS AUTENTICADAS
+--------------------------------------------------------------------------------
+
+── AUTH ──
+GET  /api/auth/me                    Dados do usuário e salão logado
+
+── DASHBOARD ──
+GET  /api/dashboard/overview         Resumo completo (faturamento, lucro, tops)
+GET  /api/dashboard/revenue-chart    Gráfico de receita (?days=30)
+GET  /api/dashboard/cash-flow        Fluxo de caixa mensal (?month=&year=)
+
+── PROFISSIONAIS ──
+GET    /api/professionals            Listar (?active=true)
+GET    /api/professionals/ranking    Ranking por faturamento (?from=&to=)
+GET    /api/professionals/:id        Detalhe
+POST   /api/professionals            Criar
+PUT    /api/professionals/:id        Atualizar
+DELETE /api/professionals/:id        Desativar
+
+── SERVIÇOS ──
+GET    /api/services                 Listar
+GET    /api/services/analysis        Análise (mais vendidos, lucrativos)
+GET    /api/services/:id             Detalhe
+POST   /api/services                 Criar { name, price, durationMin?, cost? }
+PUT    /api/services/:id             Atualizar
+DELETE /api/services/:id             Desativar
+
+── CLIENTES ──
+GET    /api/clients                  Listar (?search=)
+GET    /api/clients/stats            Estatísticas (novos, recorrentes)
+GET    /api/clients/:id              Detalhe + histórico
+POST   /api/clients                  Criar
+PUT    /api/clients/:id              Atualizar
+DELETE /api/clients/:id              Remover
+
+── ATENDIMENTOS ──
+GET    /api/appointments             Listar (?status=&professionalId=&from=&to=)
+GET    /api/appointments/:id         Detalhe
+POST   /api/appointments             Agendar
+PATCH  /api/appointments/:id/complete  Concluir { paymentMethod, price? }
+PUT    /api/appointments/:id         Atualizar
+DELETE /api/appointments/:id         Remover
+
+── DESPESAS ──
+GET    /api/expenses                 Listar (?status=&category=&from=&to=)
+GET    /api/expenses/summary         Resumo (pago, pendente, atrasado)
+POST   /api/expenses                 Criar
+PUT    /api/expenses/:id             Atualizar
+DELETE /api/expenses/:id             Remover
+
+── ESTOQUE (apenas plano PREMIUM) ──
+GET    /api/products                 Listar (?lowStock=true)
+GET    /api/products/alerts          Alertas de estoque baixo
+POST   /api/products                 Criar
+PUT    /api/products/:id             Atualizar
+PATCH  /api/products/:id/stock       Ajustar estoque { quantity, reason? }
+DELETE /api/products/:id             Desativar
+
+── METAS ──
+GET  /api/goals                      Listar metas (?month=&year=)
+GET  /api/goals/progress             Progresso das metas
+POST /api/goals                      Criar { month, year, revenueTarget, professionalId? }
+
+
+--------------------------------------------------------------------------------
+LIMITES POR PLANO
+--------------------------------------------------------------------------------
+
+  BASIC         → até 3 profissionais | sem estoque
+  PROFESSIONAL  → até 10 profissionais | sem estoque
+  PREMIUM       → ilimitado | com estoque
+
+
+--------------------------------------------------------------------------------
+EXEMPLOS CURL
+--------------------------------------------------------------------------------
+
+# Login
+curl -X POST http://localhost:3001/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d "{\"email\":\"regina@salonhub.demo\",\"password\":\"senha123\"}"
+
+# Dashboard
+curl http://localhost:3001/api/dashboard/overview \
+  -H "Authorization: Bearer SEU_TOKEN"
+
+# Criar cliente
+curl -X POST http://localhost:3001/api/clients \
+  -H "Authorization: Bearer SEU_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d "{\"name\":\"Novo Cliente\",\"phone\":\"11999990000\"}"
+
+# Concluir atendimento
+curl -X PATCH http://localhost:3001/api/appointments/ID/complete \
+  -H "Authorization: Bearer SEU_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d "{\"paymentMethod\":\"PIX\"}"
+
+
+--------------------------------------------------------------------------------
+ESTRUTURA DO BACKEND
+--------------------------------------------------------------------------------
+
+  backend/
+  ├── prisma/
+  │   ├── schema.prisma      Modelos do banco (multi-tenant)
+  │   └── seed.ts            Dados de demonstração
+  ├── src/
+  │   ├── index.ts           Entrada do servidor
+  │   ├── app.ts             Express + middlewares
+  │   ├── config/            Variáveis de ambiente
+  │   ├── lib/prisma.ts      Cliente Prisma
+  │   ├── middleware/        Auth JWT + error handler
+  │   ├── routes/            Rotas da API
+  │   └── utils/             Helpers (datas, planos)
+  ├── .env                   Configuração local
+  └── README.md              Documentação técnica
+
+
+================================================================================
+  FIM DA DOCUMENTAÇÃO DA API
+================================================================================

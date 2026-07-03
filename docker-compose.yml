@@ -1,0 +1,21 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: salonhub-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: salonhub
+      POSTGRES_PASSWORD: salonhub_dev
+      POSTGRES_DB: salonhub
+    ports:
+      - "5432:5432"
+    volumes:
+      - salonhub_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U salonhub -d salonhub"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  salonhub_pgdata:

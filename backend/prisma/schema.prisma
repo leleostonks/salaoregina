@@ -1,0 +1,248 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+enum Plan {
+  BASIC
+  PROFESSIONAL
+  PREMIUM
+}
+
+enum UserRole {
+  OWNER
+  ADMIN
+  PROFESSIONAL
+}
+
+enum AppointmentStatus {
+  SCHEDULED
+  COMPLETED
+  CANCELLED
+  NO_SHOW
+}
+
+enum ExpenseCategory {
+  RENT
+  UTILITIES
+  SUPPLIES
+  SALARY
+  MARKETING
+  EQUIPMENT
+  OTHER
+}
+
+enum ExpenseStatus {
+  PENDING
+  PAID
+  OVERDUE
+}
+
+enum PaymentMethod {
+  CASH
+  CREDIT_CARD
+  DEBIT_CARD
+  PIX
+  TRANSFER
+  OTHER
+}
+
+model Tenant {
+  id        String   @id @default(cuid())
+  name      String
+  slug      String   @unique
+  email     String
+  phone     String?
+  plan      Plan     @default(BASIC)
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  users         User[]
+  professionals Professional[]
+  services      Service[]
+  clients       Client[]
+  appointments  Appointment[]
+  expenses      Expense[]
+  products      Product[]
+  goals         Goal[]
+}
+
+model User {
+  id        String   @id @default(cuid())
+  tenantId  String
+  name      String
+  email     String
+  password  String
+  role      UserRole @default(OWNER)
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  tenant Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  @@unique([tenantId, email])
+  @@index([email])
+}
+
+model Professional {
+  id             String   @id @default(cuid())
+  tenantId       String
+  name           String
+  email          String?
+  phone          String?
+  commissionRate Float    @default(0.4)
+  active         Boolean  @default(true)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  tenant       Tenant        @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  appointments Appointment[]
+  goals        Goal[]
+
+  @@index([tenantId])
+}
+
+model Service {
+  id          String   @id @default(cuid())
+  tenantId    String
+  name        String
+  price       Float
+  durationMin Int      @default(60)
+  cost        Float    @default(0)
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  tenant           Tenant            @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  appointments     Appointment[]
+  appointmentItems AppointmentItem[]
+
+  @@index([tenantId])
+}
+
+model Client {
+  id        String   @id @default(cuid())
+  tenantId  String
+  name      String
+  email     String?
+  phone     String?
+  notes     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  tenant       Tenant        @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  appointments Appointment[]
+
+  @@index([tenantId])
+}
+
+model Appointment {
+  id             String            @id @default(cuid())
+  tenantId       String
+  clientId       String
+  professionalId String
+  serviceId      String?
+  scheduledAt    DateTime
+  completedAt    DateTime?
+  status         AppointmentStatus @default(SCHEDULED)
+  price          Float
+  commission     Float             @default(0)
+  paymentMethod  PaymentMethod?
+  notes          String?
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
+
+  tenant       Tenant               @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  client       Client               @relation(fields: [clientId], references: [id])
+  professional Professional         @relation(fields: [professionalId], references: [id])
+  service      Service?             @relation(fields: [serviceId], references: [id])
+  items        AppointmentItem[]
+  payments     AppointmentPayment[]
+
+  @@index([tenantId])
+  @@index([tenantId, scheduledAt])
+  @@index([tenantId, status])
+}
+
+model AppointmentItem {
+  id            String @id @default(cuid())
+  appointmentId String
+  serviceId     String
+  price         Float
+
+  appointment Appointment @relation(fields: [appointmentId], references: [id], onDelete: Cascade)
+  service     Service     @relation(fields: [serviceId], references: [id])
+
+  @@index([appointmentId])
+  @@index([serviceId])
+}
+
+model AppointmentPayment {
+  id            String        @id @default(cuid())
+  appointmentId String
+  method        PaymentMethod
+  amount        Float
+  createdAt     DateTime      @default(now())
+
+  appointment Appointment @relation(fields: [appointmentId], references: [id], onDelete: Cascade)
+
+  @@index([appointmentId])
+}
+
+model Expense {
+  id          String          @id @default(cuid())
+  tenantId    String
+  description String
+  amount      Float
+  category    ExpenseCategory @default(OTHER)
+  status      ExpenseStatus   @default(PENDING)
+  dueDate     DateTime
+  paidAt      DateTime?
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+
+  tenant Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  @@index([tenantId])
+  @@index([tenantId, dueDate])
+}
+
+model Product {
+  id           String   @id @default(cuid())
+  tenantId     String
+  name         String
+  sku          String?
+  quantity     Int      @default(0)
+  minQuantity  Int      @default(5)
+  unitCost     Float    @default(0)
+  unitPrice    Float    @default(0)
+  active       Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  tenant Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  @@index([tenantId])
+}
+
+model Goal {
+  id             String   @id @default(cuid())
+  tenantId       String
+  professionalId String?
+  month          Int
+  year           Int
+  revenueTarget  Float
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  tenant       Tenant        @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  professional Professional? @relation(fields: [professionalId], references: [id])
+
+  @@unique([tenantId, professionalId, month, year])
+  @@index([tenantId])
+}
