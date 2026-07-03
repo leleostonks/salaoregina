@@ -71,12 +71,12 @@ export const update = asyncHandler(async (req: Request, res: Response) => {
   await requireInventoryPlan(req.user!.tenantId);
   const data = updateSchema.parse(req.body);
   const existing = await prisma.product.findFirst({
-    where: { id: req.params.id, ...tenantScope(req.user!.tenantId) },
+    where: { id: (req.params.id as string), ...tenantScope(req.user!.tenantId) },
   });
   if (!existing) throw new AppError(404, 'Produto não encontrado');
 
   const product = await prisma.product.update({
-    where: { id: req.params.id },
+    where: { id: (req.params.id as string) },
     data,
   });
   res.json(product);
@@ -86,7 +86,7 @@ export const adjustStock = asyncHandler(async (req: Request, res: Response) => {
   await requireInventoryPlan(req.user!.tenantId);
   const data = adjustSchema.parse(req.body);
   const existing = await prisma.product.findFirst({
-    where: { id: req.params.id, ...tenantScope(req.user!.tenantId) },
+    where: { id: (req.params.id as string), ...tenantScope(req.user!.tenantId) },
   });
   if (!existing) throw new AppError(404, 'Produto não encontrado');
 
@@ -94,7 +94,7 @@ export const adjustStock = asyncHandler(async (req: Request, res: Response) => {
   if (newQty < 0) throw new AppError(400, 'Estoque insuficiente');
 
   const product = await prisma.product.update({
-    where: { id: req.params.id },
+    where: { id: (req.params.id as string) },
     data: { quantity: newQty },
   });
   res.json(product);
@@ -103,12 +103,12 @@ export const adjustStock = asyncHandler(async (req: Request, res: Response) => {
 export const remove = asyncHandler(async (req: Request, res: Response) => {
   await requireInventoryPlan(req.user!.tenantId);
   const existing = await prisma.product.findFirst({
-    where: { id: req.params.id, ...tenantScope(req.user!.tenantId) },
+    where: { id: (req.params.id as string), ...tenantScope(req.user!.tenantId) },
   });
   if (!existing) throw new AppError(404, 'Produto não encontrado');
 
   await prisma.product.update({
-    where: { id: req.params.id },
+    where: { id: (req.params.id as string) },
     data: { active: false },
   });
   res.json({ message: 'Produto desativado' });

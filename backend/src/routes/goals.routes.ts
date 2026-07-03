@@ -94,10 +94,10 @@ export const progress = asyncHandler(async (req: Request, res: Response) => {
 
 export const remove = asyncHandler(async (req: Request, res: Response) => {
   const existing = await prisma.goal.findFirst({
-    where: { id: req.params.id, ...tenantScope(req.user!.tenantId) },
+    where: { id: (req.params.id as string), ...tenantScope(req.user!.tenantId) },
   });
   if (!existing) throw new AppError(404, 'Meta não encontrada');
 
-  await prisma.goal.delete({ where: { id: req.params.id } });
+  await prisma.goal.delete({ where: { id: (req.params.id as string) } });
   res.json({ message: 'Meta removida' });
 });

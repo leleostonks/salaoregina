@@ -44,7 +44,7 @@ export const list = asyncHandler(async (req: Request, res: Response) => {
 
 export const getById = asyncHandler(async (req: Request, res: Response) => {
   const professional = await prisma.professional.findFirst({
-    where: { id: req.params.id, ...tenantScope(req.user!.tenantId) },
+    where: { id: (req.params.id as string), ...tenantScope(req.user!.tenantId) },
   });
   if (!professional) throw new AppError(404, 'Profissional não encontrado');
   res.json(professional);
@@ -69,12 +69,12 @@ export const create = asyncHandler(async (req: Request, res: Response) => {
 export const update = asyncHandler(async (req: Request, res: Response) => {
   const data = updateSchema.parse(req.body);
   const existing = await prisma.professional.findFirst({
-    where: { id: req.params.id, ...tenantScope(req.user!.tenantId) },
+    where: { id: (req.params.id as string), ...tenantScope(req.user!.tenantId) },
   });
   if (!existing) throw new AppError(404, 'Profissional não encontrado');
 
   const professional = await prisma.professional.update({
-    where: { id: req.params.id },
+    where: { id: (req.params.id as string) },
     data: {
       ...data,
       email: data.email === '' ? null : data.email,
@@ -85,12 +85,12 @@ export const update = asyncHandler(async (req: Request, res: Response) => {
 
 export const remove = asyncHandler(async (req: Request, res: Response) => {
   const existing = await prisma.professional.findFirst({
-    where: { id: req.params.id, ...tenantScope(req.user!.tenantId) },
+    where: { id: (req.params.id as string), ...tenantScope(req.user!.tenantId) },
   });
   if (!existing) throw new AppError(404, 'Profissional não encontrado');
 
   await prisma.professional.update({
-    where: { id: req.params.id },
+    where: { id: (req.params.id as string) },
     data: { active: false },
   });
   res.json({ message: 'Profissional desativado' });

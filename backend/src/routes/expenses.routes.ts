@@ -54,12 +54,12 @@ export const create = asyncHandler(async (req: Request, res: Response) => {
 export const update = asyncHandler(async (req: Request, res: Response) => {
   const data = updateSchema.parse(req.body);
   const existing = await prisma.expense.findFirst({
-    where: { id: req.params.id, ...tenantScope(req.user!.tenantId) },
+    where: { id: (req.params.id as string), ...tenantScope(req.user!.tenantId) },
   });
   if (!existing) throw new AppError(404, 'Despesa não encontrada');
 
   const expense = await prisma.expense.update({
-    where: { id: req.params.id },
+    where: { id: (req.params.id as string) },
     data: {
       ...data,
       dueDate: data.dueDate ? new Date(data.dueDate) : undefined,
@@ -76,11 +76,11 @@ export const update = asyncHandler(async (req: Request, res: Response) => {
 
 export const remove = asyncHandler(async (req: Request, res: Response) => {
   const existing = await prisma.expense.findFirst({
-    where: { id: req.params.id, ...tenantScope(req.user!.tenantId) },
+    where: { id: (req.params.id as string), ...tenantScope(req.user!.tenantId) },
   });
   if (!existing) throw new AppError(404, 'Despesa não encontrada');
 
-  await prisma.expense.delete({ where: { id: req.params.id } });
+  await prisma.expense.delete({ where: { id: (req.params.id as string) } });
   res.json({ message: 'Despesa removida' });
 });
 

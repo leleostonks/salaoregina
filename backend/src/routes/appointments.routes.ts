@@ -82,7 +82,7 @@ export const list = asyncHandler(async (req: Request, res: Response) => {
 
 export const getById = asyncHandler(async (req: Request, res: Response) => {
   const appointment = await prisma.appointment.findFirst({
-    where: { id: req.params.id, ...tenantScope(req.user!.tenantId) },
+    where: { id: (req.params.id as string), ...tenantScope(req.user!.tenantId) },
     include: appointmentInclude,
   });
   if (!appointment) throw new AppError(404, 'Atendimento não encontrado');
@@ -132,7 +132,7 @@ export const complete = asyncHandler(async (req: Request, res: Response) => {
   const tenantId = req.user!.tenantId;
 
   const appointment = await prisma.appointment.findFirst({
-    where: { id: req.params.id, tenantId },
+    where: { id: (req.params.id as string), tenantId },
     include: { professional: true, payments: true },
   });
   if (!appointment) throw new AppError(404, 'Atendimento não encontrado');
@@ -161,7 +161,7 @@ export const complete = asyncHandler(async (req: Request, res: Response) => {
   const updated = await prisma.$transaction(async (tx) => {
     await tx.appointmentPayment.deleteMany({ where: { appointmentId: appointment.id } });
     return tx.appointment.update({
-      where: { id: req.params.id },
+      where: { id: (req.params.id as string) },
       data: {
         status: 'COMPLETED',
         completedAt: new Date(),
@@ -185,12 +185,12 @@ export const complete = asyncHandler(async (req: Request, res: Response) => {
 export const update = asyncHandler(async (req: Request, res: Response) => {
   const data = updateSchema.parse(req.body);
   const existing = await prisma.appointment.findFirst({
-    where: { id: req.params.id, ...tenantScope(req.user!.tenantId) },
+    where: { id: (req.params.id as string), ...tenantScope(req.user!.tenantId) },
   });
   if (!existing) throw new AppError(404, 'Atendimento não encontrado');
 
   const appointment = await prisma.appointment.update({
-    where: { id: req.params.id },
+    where: { id: (req.params.id as string) },
     data: {
       ...data,
       scheduledAt: data.scheduledAt ? new Date(data.scheduledAt) : undefined,
@@ -202,10 +202,10 @@ export const update = asyncHandler(async (req: Request, res: Response) => {
 
 export const remove = asyncHandler(async (req: Request, res: Response) => {
   const existing = await prisma.appointment.findFirst({
-    where: { id: req.params.id, ...tenantScope(req.user!.tenantId) },
+    where: { id: (req.params.id as string), ...tenantScope(req.user!.tenantId) },
   });
   if (!existing) throw new AppError(404, 'Atendimento não encontrado');
 
-  await prisma.appointment.delete({ where: { id: req.params.id } });
+  await prisma.appointment.delete({ where: { id: (req.params.id as string) } });
   res.json({ message: 'Atendimento removido' });
 });

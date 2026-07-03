@@ -29,7 +29,7 @@ export const list = asyncHandler(async (req: Request, res: Response) => {
 
 export const getById = asyncHandler(async (req: Request, res: Response) => {
   const service = await prisma.service.findFirst({
-    where: { id: req.params.id, ...tenantScope(req.user!.tenantId) },
+    where: { id: (req.params.id as string), ...tenantScope(req.user!.tenantId) },
   });
   if (!service) throw new AppError(404, 'Serviço não encontrado');
   res.json(service);
@@ -52,12 +52,12 @@ export const create = asyncHandler(async (req: Request, res: Response) => {
 export const update = asyncHandler(async (req: Request, res: Response) => {
   const data = updateSchema.parse(req.body);
   const existing = await prisma.service.findFirst({
-    where: { id: req.params.id, ...tenantScope(req.user!.tenantId) },
+    where: { id: (req.params.id as string), ...tenantScope(req.user!.tenantId) },
   });
   if (!existing) throw new AppError(404, 'Serviço não encontrado');
 
   const service = await prisma.service.update({
-    where: { id: req.params.id },
+    where: { id: (req.params.id as string) },
     data,
   });
   res.json(service);
@@ -65,12 +65,12 @@ export const update = asyncHandler(async (req: Request, res: Response) => {
 
 export const remove = asyncHandler(async (req: Request, res: Response) => {
   const existing = await prisma.service.findFirst({
-    where: { id: req.params.id, ...tenantScope(req.user!.tenantId) },
+    where: { id: (req.params.id as string), ...tenantScope(req.user!.tenantId) },
   });
   if (!existing) throw new AppError(404, 'Serviço não encontrado');
 
   await prisma.service.update({
-    where: { id: req.params.id },
+    where: { id: (req.params.id as string) },
     data: { active: false },
   });
   res.json({ message: 'Serviço desativado' });

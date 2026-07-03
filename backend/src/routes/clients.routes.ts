@@ -37,7 +37,7 @@ export const list = asyncHandler(async (req: Request, res: Response) => {
 
 export const getById = asyncHandler(async (req: Request, res: Response) => {
   const client = await prisma.client.findFirst({
-    where: { id: req.params.id, ...tenantScope(req.user!.tenantId) },
+    where: { id: (req.params.id as string), ...tenantScope(req.user!.tenantId) },
     include: {
       appointments: {
         orderBy: { scheduledAt: 'desc' },
@@ -70,12 +70,12 @@ export const create = asyncHandler(async (req: Request, res: Response) => {
 export const update = asyncHandler(async (req: Request, res: Response) => {
   const data = updateSchema.parse(req.body);
   const existing = await prisma.client.findFirst({
-    where: { id: req.params.id, ...tenantScope(req.user!.tenantId) },
+    where: { id: (req.params.id as string), ...tenantScope(req.user!.tenantId) },
   });
   if (!existing) throw new AppError(404, 'Cliente não encontrado');
 
   const client = await prisma.client.update({
-    where: { id: req.params.id },
+    where: { id: (req.params.id as string) },
     data: {
       ...data,
       email: data.email === '' ? null : data.email,
@@ -86,11 +86,11 @@ export const update = asyncHandler(async (req: Request, res: Response) => {
 
 export const remove = asyncHandler(async (req: Request, res: Response) => {
   const existing = await prisma.client.findFirst({
-    where: { id: req.params.id, ...tenantScope(req.user!.tenantId) },
+    where: { id: (req.params.id as string), ...tenantScope(req.user!.tenantId) },
   });
   if (!existing) throw new AppError(404, 'Cliente não encontrado');
 
-  await prisma.client.delete({ where: { id: req.params.id } });
+  await prisma.client.delete({ where: { id: (req.params.id as string) } });
   res.json({ message: 'Cliente removido' });
 });
 
